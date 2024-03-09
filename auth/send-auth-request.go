@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/chanyeinthaw/traduora-sync/config"
+	"github.com/chanyeinthaw/traduora-export/config"
 	"net/http"
 	"os"
 )

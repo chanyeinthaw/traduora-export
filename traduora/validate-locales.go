@@ -3,7 +3,7 @@ package traduora
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/chanyeinthaw/traduora-sync/config"
+	"github.com/chanyeinthaw/traduora-export/config"
 	"io"
 	"net/http"
 	"os"

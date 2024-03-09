@@ -1,7 +1,7 @@
 package traduora
 
 import (
-	"github.com/chanyeinthaw/traduora-sync/auth"
+	"github.com/chanyeinthaw/traduora-export/auth"
 	"net/http"
 )
 

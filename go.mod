@@ -1,4 +1,4 @@
-module github.com/chanyeinthaw/traduora-sync
+module github.com/chanyeinthaw/traduora-export
 
 go 1.22.1
 
