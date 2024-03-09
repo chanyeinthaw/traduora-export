@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sync"
 )
 
 type Translation struct {
@@ -15,20 +16,17 @@ type Translation struct {
 }
 
 func ExportTranslations() {
-	numLocales := len(config.Locales())
-	ch := make(chan bool, numLocales)
+	wg := sync.WaitGroup{}
 	for _, l := range config.Locales() {
-		go exportTranslation(l, ch)
+		wg.Add(1)
+		go exportTranslation(l, &wg)
 	}
 
-	for i := 0; i < numLocales; i++ {
-		<-ch
-	}
-
-	return
+	wg.Wait()
 }
 
-func exportTranslation(locale string, result chan bool) {
+func exportTranslation(locale string, group *sync.WaitGroup) {
+	defer group.Done()
 	reqURL := config.ApiURL(fmt.Sprintf("/api/v1/projects/%s/exports", config.ProjectId()))
 
 	params := url.Values{}
@@ -80,6 +78,4 @@ func exportTranslation(locale string, result chan bool) {
 		fmt.Printf("Error writing to file %s.json", locale)
 		os.Exit(1)
 	}
-
-	result <- true
 }
