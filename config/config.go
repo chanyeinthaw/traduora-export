@@ -23,6 +23,18 @@ type Config struct {
 var cfg Config
 
 func Read() {
+	if _, err := os.Stat(configFile); os.IsNotExist(err) {
+		generateCfg := &Config{}
+		outBytes, _ := yaml.Marshal(generateCfg)
+
+		err = os.WriteFile(configFile, outBytes, 0755)
+
+		if err == nil {
+			fmt.Println("The configuration file was not found. A new one has been generated.\nEdit configuration in", configFile)
+			os.Exit(0)
+		}
+	}
+
 	bytes, err := os.ReadFile(configFile)
 	if err != nil {
 		fmt.Printf("Unable to read %s\n", configFile)
