@@ -20,6 +20,7 @@ type translation struct {
 }
 
 func ValidateLocales() {
+	fmt.Println("Reading available locales")
 	resp := sendGetTranslationsRequest()
 	locales := getAvailableLocales(resp)
 

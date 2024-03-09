@@ -16,6 +16,7 @@ type Translation struct {
 }
 
 func ExportTranslations() {
+	fmt.Println("Exporting locales ...")
 	wg := sync.WaitGroup{}
 	for _, l := range config.Locales() {
 		wg.Add(1)
