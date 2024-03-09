@@ -1,0 +1,10 @@
+host: <url>
+
+projectId: <projectId>
+clientId: <clientId>
+clientSecret: <clientSecret>
+
+locales:
+  - en
+
+outputDir: <outputDir>
