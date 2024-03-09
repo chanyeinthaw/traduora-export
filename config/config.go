@@ -37,10 +37,6 @@ func Read() {
 	}
 }
 
-func Host() string {
-	return cfg.Host
-}
-
 func ProjectId() string {
 	return cfg.ProjectId
 }
