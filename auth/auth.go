@@ -18,14 +18,20 @@ var authData authRes
 const authInfoFile = ".traduora-token.json"
 
 func Init() {
-	if loadAuthInfo() {
+	authed := loadAuthInfo()
+	if authed {
 		return
 	}
+
+	defer func() {
+		if !authed {
+			saveAuthInfo()
+		}
+	}()
 
 	fmt.Println("Authenticating")
 	resp := sendAuthRequest()
 	readToken(resp)
-	saveAuthInfo()
 }
 
 func loadAuthInfo() bool {
