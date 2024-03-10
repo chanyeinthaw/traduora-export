@@ -20,14 +20,17 @@ func ExportTranslations() {
 	wg := sync.WaitGroup{}
 	for _, l := range config.Locales() {
 		wg.Add(1)
-		go exportTranslation(l, &wg)
+		l := l
+		go func() {
+			exportTranslation(l)
+			wg.Done()
+		}()
 	}
 
 	wg.Wait()
 }
 
-func exportTranslation(locale string, group *sync.WaitGroup) {
-	defer group.Done()
+func exportTranslation(locale string) {
 	reqURL := config.ApiURL(fmt.Sprintf("/api/v1/projects/%s/exports", config.ProjectId()))
 
 	params := url.Values{}
