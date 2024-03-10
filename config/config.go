@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-const configFile = "..traduora.yaml"
+const configFile = ".traduora.yaml"
 
 type Config struct {
 	Host string `yaml:"host"`
