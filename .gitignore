@@ -1,3 +1,5 @@
 .traduora.yaml
 dist/
 .DS_Store
+.traduora-token.json
+messages/
