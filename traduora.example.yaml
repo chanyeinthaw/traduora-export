@@ -8,3 +8,4 @@ locales:
   - en
 
 outputDir: <outputDir>
+outputFormat: <json|ts>

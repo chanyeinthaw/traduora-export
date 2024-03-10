@@ -65,7 +65,8 @@ func exportTranslation(locale string, group *sync.WaitGroup) {
 		os.Exit(1)
 	}
 
-	outFile, err := os.OpenFile(fmt.Sprintf("%s/%s.json", config.OutputDir(), locale), os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644)
+	ext, content := prepareOutput(body)
+	outFile, err := os.OpenFile(fmt.Sprintf("%s/%s.%s", config.OutputDir(), locale, ext), os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644)
 	if err != nil {
 		fmt.Println("Error opening file to write")
 		os.Exit(1)
@@ -74,9 +75,23 @@ func exportTranslation(locale string, group *sync.WaitGroup) {
 		_ = outFile.Close()
 	}()
 
-	_, err = outFile.WriteString(string(body))
+	_, err = outFile.WriteString(content)
 	if err != nil {
 		fmt.Printf("Error writing to file %s.json", locale)
 		os.Exit(1)
 	}
+}
+
+func prepareOutput(body []byte) (ext string, content string) {
+	ext = "json"
+	content = string(body)
+
+	switch config.OutputFormat() {
+	case "ts":
+		ext = "ts"
+		content = fmt.Sprintf("export default %s", content)
+		break
+	}
+
+	return
 }

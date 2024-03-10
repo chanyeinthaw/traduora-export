@@ -1,6 +1,7 @@
 package config
 
 import (
+	_ "embed"
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -17,17 +18,15 @@ type Config struct {
 
 	Locales []string `yaml:"locales"`
 
-	OutputDir string `yaml:"outputDir"`
+	OutputDir    string `yaml:"outputDir"`
+	OutputFormat string `yaml:"outputFormat"`
 }
 
 var cfg Config
 
-func Read() {
+func Read(exampleConfig string) {
 	if _, err := os.Stat(configFile); os.IsNotExist(err) {
-		generateCfg := &Config{}
-		outBytes, _ := yaml.Marshal(generateCfg)
-
-		err = os.WriteFile(configFile, outBytes, 0755)
+		err = os.WriteFile(configFile, []byte(exampleConfig), 0755)
 
 		if err == nil {
 			fmt.Println("The configuration file was not found. A new one has been generated.\nEdit configuration in", configFile)
@@ -63,6 +62,10 @@ func ClientSecret() string {
 
 func OutputDir() string {
 	return cfg.OutputDir
+}
+
+func OutputFormat() string {
+	return cfg.OutputFormat
 }
 
 func Locales() []string {
