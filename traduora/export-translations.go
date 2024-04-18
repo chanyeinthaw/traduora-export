@@ -92,7 +92,7 @@ func prepareOutput(body []byte) (ext string, content string) {
 	switch config.OutputFormat() {
 	case "ts":
 		ext = "ts"
-		content = fmt.Sprintf("export default %s", content)
+		content = fmt.Sprintf("export default %s as const", content)
 		break
 	}
 
